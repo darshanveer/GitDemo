@@ -1,0 +1,97 @@
+darshan@darshan-virtual-machine:~$ addgroup javaappuser
+addgroup: Only root may add a user or group to the system.
+darshan@darshan-virtual-machine:~$ sudo addgroup javaappuser
+[sudo] password for darshan: 
+Adding group `javaappuser' (GID 1001) ...
+Done.
+darshan@darshan-virtual-machine:~$ sudo addgroup hostinggroup
+Adding group `hostinggroup' (GID 1002) ...
+Done.
+darshan@darshan-virtual-machine:~$ sudo addgroup dhubgroup
+Adding group `dhubgroup' (GID 1003) ...
+Done.
+darshan@darshan-virtual-machine:~$ sudo dropgroup javaappuser
+sudo: dropgroup: command not found
+darshan@darshan-virtual-machine:~$ sudo groupdel javaappuser
+darshan@darshan-virtual-machine:~$ 
+darshan@darshan-virtual-machine:~$ sudo adduser javauser
+Adding user `javauser' ...
+Adding new group `javauser' (1001) ...
+Adding new user `javauser' (1001) with group `javauser' ...
+Creating home directory `/home/javauser' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for javauser
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] y
+darshan@darshan-virtual-machine:~$ sudo adduser dhubuser
+Adding user `dhubuser' ...
+Adding new group `dhubuser' (1004) ...
+Adding new user `dhubuser' (1002) with group `dhubuser' ...
+Creating home directory `/home/dhubuser' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for dhubuser
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] Y
+darshan@darshan-virtual-machine:~$ 
+darshan@darshan-virtual-machine:~$ sudo usermod -a -G hostinggroup javauser
+darshan@darshan-virtual-machine:~$ sudo usermod -a -G dhubgroup dhubuser
+darshan@darshan-virtual-machine:~$ 
+darshan@darshan-virtual-machine:~$ su javauser
+Password: 
+javauser@darshan-virtual-machine:/home/darshan$ mkdir batchfolder 775
+mkdir: cannot create directory ‘batchfolder’: Permission denied
+mkdir: cannot create directory ‘775’: Permission denied
+javauser@darshan-virtual-machine:/home/darshan$ cd ../javauser
+javauser@darshan-virtual-machine:~$ mkdir batchfolder 775
+javauser@darshan-virtual-machine:~$ ls -ltr
+total 20
+-rw-r--r-- 1 javauser javauser 8980 Nov  6 12:02 examples.desktop
+drwxrwxr-x 2 javauser javauser 4096 Nov  6 12:07 batchfolder
+drwxrwxr-x 2 javauser javauser 4096 Nov  6 12:07 775
+javauser@darshan-virtual-machine:~$ rmdir 775
+javauser@darshan-virtual-machine:~$ rmdir batchfolder/
+javauser@darshan-virtual-machine:~$ mkdir batchfolder
+javauser@darshan-virtual-machine:~$ ls -ltr
+total 16
+-rw-r--r-- 1 javauser javauser 8980 Nov  6 12:02 examples.desktop
+drwxrwxr-x 2 javauser javauser 4096 Nov  6 12:08 batchfolder
+javauser@darshan-virtual-machine:~$ groups
+javauser hostinggroup
+javauser@darshan-virtual-machine:~$ touch batchfolder/batchfile.txt
+javauser@darshan-virtual-machine:~$ ls -ltr batchfolder/
+total 0
+-rw-rw-r-- 1 javauser javauser 0 Nov  6 12:09 batchfile.txt
+javauser@darshan-virtual-machine:~$ chgrp batchfolder dhubgroup
+chgrp: invalid group: ‘batchfolder’
+javauser@darshan-virtual-machine:~$ chgrp dhubgroup batchfolder/
+chgrp: changing group of 'batchfolder/': Operation not permitted
+javauser@darshan-virtual-machine:~$ sudo chgrp dhubgroup batchfolder/
+[sudo] password for javauser: 
+javauser is not in the sudoers file.  This incident will be reported.
+javauser@darshan-virtual-machine:~$ 
+javauser@darshan-virtual-machine:~$ sudo chown dhubuser batchfolder/
+[sudo] password for javauser: 
+javauser is not in the sudoers file.  This incident will be reported.
+javauser@darshan-virtual-machine:~$ chown dhubuser batchfolder/
+chown: changing ownership of 'batchfolder/': Operation not permitted
+javauser@darshan-virtual-machine:~$ chown dhubuser batchfolder
+chown: changing ownership of 'batchfolder': Operation not permitted
+javauser@darshan-virtual-machine:~$ chown javauser:dhubuser batchfolder
+chown: changing ownership of 'batchfolder': Operation not permitted
+javauser@darshan-virtual-machine:~$ 
