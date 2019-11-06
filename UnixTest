@@ -95,3 +95,54 @@ chown: changing ownership of 'batchfolder': Operation not permitted
 javauser@darshan-virtual-machine:~$ chown javauser:dhubuser batchfolder
 chown: changing ownership of 'batchfolder': Operation not permitted
 javauser@darshan-virtual-machine:~$ 
+
+javauser@darshan-virtual-machine:~$ ls
+batchfolder  examples.desktop
+javauser@darshan-virtual-machine:~$ ls -ltr
+total 16
+-rw-r--r-- 1 javauser javauser 8980 Nov  6 12:02 examples.desktop
+drwxrwsr-x 2 javauser javauser 4096 Nov  6 12:09 batchfolder
+javauser@darshan-virtual-machine:~$ chgrp hostinggroup batchfolder
+javauser@darshan-virtual-machine:~$ ls -ltr
+total 16
+-rw-r--r-- 1 javauser javauser     8980 Nov  6 12:02 examples.desktop
+drwxrwsr-x 2 javauser hostinggroup 4096 Nov  6 12:09 batchfolder
+javauser@darshan-virtual-machine:~$ ls -ltr batchfolder/
+total 0
+-rw-rw-r-- 1 javauser javauser 0 Nov  6 12:09 batchfile.txt
+javauser@darshan-virtual-machine:~$ touch batchfolder/newfile.txt
+javauser@darshan-virtual-machine:~$ ls -ltr batchfolder/
+total 0
+-rw-rw-r-- 1 javauser javauser     0 Nov  6 12:09 batchfile.txt
+-rw-rw-r-- 1 javauser hostinggroup 0 Nov  6 12:50 newfile.txt
+javauser@darshan-virtual-machine:~$ chown mkdir batchfolder/newFolder
+chown: invalid user: ‘mkdir’
+javauser@darshan-virtual-machine:~$ mkdir batchfolder/newFolder
+javauser@darshan-virtual-machine:~$ ls -ltr batchfolder/
+total 4
+-rw-rw-r-- 1 javauser javauser        0 Nov  6 12:09 batchfile.txt
+-rw-rw-r-- 1 javauser hostinggroup    0 Nov  6 12:50 newfile.txt
+drwxrwsr-x 2 javauser hostinggroup 4096 Nov  6 12:52 newFolder
+javauser@darshan-virtual-machine:~$ exit
+exit
+darshan@darshan-virtual-machine:~$ pwd
+/home/darshan
+darshan@darshan-virtual-machine:~$ 
+darshan@darshan-virtual-machine:~$ chgrp dhubuser ../javauser/batchfolder/
+chgrp: changing group of '../javauser/batchfolder/': Operation not permitted
+darshan@darshan-virtual-machine:~$ sudo chgrp dhubuser ../javauser/batchfolder/
+[sudo] password for darshan: 
+darshan@darshan-virtual-machine:~$ su dhubuser
+Password: 
+dhubuser@darshan-virtual-machine:/home/darshan$ cd ../javauser/
+dhubuser@darshan-virtual-machine:/home/javauser$ ls -ltr
+total 16
+-rw-r--r-- 1 javauser javauser 8980 Nov  6 12:02 examples.desktop
+drwxrwsr-x 3 javauser dhubuser 4096 Nov  6 12:52 batchfolder
+dhubuser@darshan-virtual-machine:/home/javauser$ touch batchfolder/filecreatedbydhub.txt
+dhubuser@darshan-virtual-machine:/home/javauser$ ls -ltr batchfolder/filecreatedbydhub.txt 
+-rw-rw-r-- 1 dhubuser dhubuser 0 Nov  6 12:58 batchfolder/filecreatedbydhub.txt
+dhubuser@darshan-virtual-machine:/home/javauser$ ls -ltr batchfolder/filecreatedbydhub.txt 
+-rw-rw-r-- 1 dhubuser dhubuser 0 Nov  6 12:58 batchfolder/filecreatedbydhub.txt
+dhubuser@darshan-virtual-machine:/home/javauser$ 
+
